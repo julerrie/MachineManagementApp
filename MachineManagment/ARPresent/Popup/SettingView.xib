@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingView" customModule="MachineManagment" customModuleProvider="target">
+            <connections>
+                <outlet property="confirmButton" destination="FCH-Vt-PCI" id="mys-59-wUF"/>
+                <outlet property="contentView" destination="hgN-LR-C3V" id="qUW-le-flB"/>
+                <outlet property="worldMapNameLabel" destination="ANH-bu-GFl" id="7Iw-dE-VhP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="hgN-LR-C3V">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="場所名を設定" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NAW-cg-32R">
+                    <rect key="frame" x="20" y="20" width="260" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="PR3-Hs-L16"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="場所名を入力してください" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ANH-bu-GFl">
+                    <rect key="frame" x="50" y="85" width="200" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="afq-9S-E7V"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCH-Vt-PCI">
+                    <rect key="frame" x="50" y="140" width="80" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="Q1F-nf-2aT"/>
+                    </constraints>
+                    <state key="normal" title="確認"/>
+                    <connections>
+                        <action selector="tapConfirmButton:" destination="-1" eventType="touchUpInside" id="7bE-9r-Dvb"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLS-ro-1GJ">
+                    <rect key="frame" x="170" y="140" width="80" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="80" id="wTR-Tq-Tb4"/>
+                    </constraints>
+                    <state key="normal" title="取り消し"/>
+                    <connections>
+                        <action selector="tapCancleButton:" destination="-1" eventType="touchUpInside" id="b2a-3p-w16"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="NAW-cg-32R" firstAttribute="top" secondItem="hgN-LR-C3V" secondAttribute="top" constant="20" id="0fy-LQ-lR2"/>
+                <constraint firstItem="UXb-t7-O7h" firstAttribute="trailing" secondItem="NAW-cg-32R" secondAttribute="trailing" constant="20" id="L9c-bM-Hof"/>
+                <constraint firstItem="FCH-Vt-PCI" firstAttribute="leading" secondItem="UXb-t7-O7h" secondAttribute="leading" constant="50" id="O6M-VP-y5G"/>
+                <constraint firstItem="UXb-t7-O7h" firstAttribute="trailing" secondItem="ANH-bu-GFl" secondAttribute="trailing" constant="50" id="QbL-UC-IWN"/>
+                <constraint firstItem="UXb-t7-O7h" firstAttribute="trailing" secondItem="tLS-ro-1GJ" secondAttribute="trailing" constant="50" id="Yut-S6-dSf"/>
+                <constraint firstItem="ANH-bu-GFl" firstAttribute="leading" secondItem="UXb-t7-O7h" secondAttribute="leading" constant="50" id="aXO-3C-6Kc"/>
+                <constraint firstItem="tLS-ro-1GJ" firstAttribute="top" secondItem="ANH-bu-GFl" secondAttribute="bottom" constant="20" id="bya-J6-c44"/>
+                <constraint firstItem="ANH-bu-GFl" firstAttribute="top" secondItem="NAW-cg-32R" secondAttribute="bottom" constant="15" id="e2x-eb-wAi"/>
+                <constraint firstItem="FCH-Vt-PCI" firstAttribute="top" secondItem="ANH-bu-GFl" secondAttribute="bottom" constant="20" id="lnA-Sa-mZh"/>
+                <constraint firstItem="NAW-cg-32R" firstAttribute="leading" secondItem="UXb-t7-O7h" secondAttribute="leading" constant="20" id="wOd-6p-yU8"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="UXb-t7-O7h"/>
+            <point key="canvasLocation" x="518.84057971014499" y="-67.633928571428569"/>
+        </view>
+    </objects>
+</document>

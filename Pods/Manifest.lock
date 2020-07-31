@@ -1,0 +1,27 @@
+PODS:
+  - Realm (5.3.2):
+    - Realm/Headers (= 5.3.2)
+  - Realm/Headers (5.3.2)
+  - RealmSwift (5.3.2):
+    - Realm (= 5.3.2)
+  - SnapshotTesting (1.8.1)
+
+DEPENDENCIES:
+  - Realm
+  - RealmSwift
+  - SnapshotTesting (~> 1.8.1)
+
+SPEC REPOS:
+  trunk:
+    - Realm
+    - RealmSwift
+    - SnapshotTesting
+
+SPEC CHECKSUMS:
+  Realm: c6794276ca8884808ba168a22f9d71362b170b85
+  RealmSwift: 42ec6cec3170aeeda407f797f07268a7d055ebc7
+  SnapshotTesting: 0bf562bd74d3e9d053cd8f1123bd7b8913304df4
+
+PODFILE CHECKSUM: bbf5bf46b84c9f580660fe05efa984e3ff133f4a
+
+COCOAPODS: 1.9.3
