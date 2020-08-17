@@ -21,6 +21,9 @@ class MachineModel: Object, Identifiable {
     @objc dynamic var userName: String = ""
     @objc dynamic var complete: String = ""
     @objc dynamic var date: String = ""
+    @objc dynamic var worldMapx: String = ""
+    @objc dynamic var worldMapy: String = ""
+    
     
     convenience init(entity: Machine.entity) {
         self.init()
@@ -35,6 +38,8 @@ class MachineModel: Object, Identifiable {
         self.userName = entity.userName
         self.complete = entity.complete
         self.date = entity.date
+        self.worldMapx = entity.worldMapx
+        self.worldMapy = entity.worldMapy
     }
     
     override static func primaryKey() -> String? {

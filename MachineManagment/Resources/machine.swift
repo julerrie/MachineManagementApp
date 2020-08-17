@@ -26,6 +26,8 @@ class Machine {
         var userName: String
         var complete: String
         var date: String
+        var worldMapx: String
+        var worldMapy: String
     }
     
     func loadJson(filename fileName: String) -> MachineList? {

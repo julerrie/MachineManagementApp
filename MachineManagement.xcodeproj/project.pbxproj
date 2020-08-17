@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2ADBC66C17DA2CD66E2C9749 /* Pods_MachineManagmentTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A385DC73E99C5F29A052A934 /* Pods_MachineManagmentTests.framework */; };
 		8C991657A5C9F9633345F76B /* Pods_MachineManagment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90CFC56E0674907C36785025 /* Pods_MachineManagment.framework */; };
+		B401AAE724DBD1DE00179337 /* MotionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B401AAE624DBD1DE00179337 /* MotionManager.swift */; };
 		B4328A7E244EBF8500A35F8A /* KeyboardInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4328A7D244EBF8500A35F8A /* KeyboardInputView.swift */; };
 		B4328A812450089100A35F8A /* SelectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4328A802450089100A35F8A /* SelectListView.swift */; };
 		B4328A842450166200A35F8A /* FunctionSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4328A832450166200A35F8A /* FunctionSelectView.swift */; };
@@ -39,6 +40,7 @@
 		B44A4AE724C8085000C5A154 /* MenuViewUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44A4AE624C8085000C5A154 /* MenuViewUITest.swift */; };
 		B44A4AEB24C811EB00C5A154 /* SnapshotTesting+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44A4AEA24C811EA00C5A154 /* SnapshotTesting+SwiftUI.swift */; };
 		B45344632480CE230083EA63 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45344622480CE230083EA63 /* ActivityIndicator.swift */; };
+		B4583F2324E26D57000FFDF1 /* LocationProvider in Frameworks */ = {isa = PBXBuildFile; productRef = B4583F2224E26D57000FFDF1 /* LocationProvider */; };
 		B45955F8246CF8D400A55F08 /* extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45955F7246CF8D400A55F08 /* extension.swift */; };
 		B45955FA246CFB5600A55F08 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45955F9246CFB5600A55F08 /* SettingView.swift */; };
 		B45955FC246CFB6D00A55F08 /* SettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B45955FB246CFB6D00A55F08 /* SettingView.xib */; };
@@ -115,6 +117,7 @@
 		A2F2E6A513D78C72B6854DEC /* Pods-MachineManagment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachineManagment.release.xcconfig"; path = "Target Support Files/Pods-MachineManagment/Pods-MachineManagment.release.xcconfig"; sourceTree = "<group>"; };
 		A385DC73E99C5F29A052A934 /* Pods_MachineManagmentTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MachineManagmentTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8FAFA223BF628DC91EFF83 /* Pods-MachineManagment-MachineManagmentUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MachineManagment-MachineManagmentUITests.debug.xcconfig"; path = "Target Support Files/Pods-MachineManagment-MachineManagmentUITests/Pods-MachineManagment-MachineManagmentUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B401AAE624DBD1DE00179337 /* MotionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionManager.swift; sourceTree = "<group>"; };
 		B4328A7D244EBF8500A35F8A /* KeyboardInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardInputView.swift; sourceTree = "<group>"; };
 		B4328A802450089100A35F8A /* SelectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectListView.swift; sourceTree = "<group>"; };
 		B4328A832450166200A35F8A /* FunctionSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunctionSelectView.swift; sourceTree = "<group>"; };
@@ -189,6 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4583F2324E26D57000FFDF1 /* LocationProvider in Frameworks */,
 				B439C44F2463C34E005BEA0E /* ARKit.framework in Frameworks */,
 				B477821E2489F86200F96890 /* SwiftUICharts in Frameworks */,
 				B439C4432457ECD8005BEA0E /* Realm.framework in Frameworks */,
@@ -354,6 +358,7 @@
 				B477E26F24975C6100B6A752 /* Enum.swift */,
 				B477E2722499D35400B6A752 /* UserSettings.swift */,
 				B43776CA24A5C2A400010F2F /* ColorGenerator.swift */,
+				B45955F7246CF8D400A55F08 /* extension.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -406,6 +411,7 @@
 			children = (
 				B4A33E9324D2962E00FE7825 /* MapImageView */,
 				B4A33E9124D28DE800FE7825 /* MapDirectionView.swift */,
+				B401AAE624DBD1DE00179337 /* MotionManager.swift */,
 			);
 			path = MapDirection;
 			sourceTree = "<group>";
@@ -466,7 +472,6 @@
 				B4FD4F1324459EB40032C535 /* Assets.xcassets */,
 				B4FD4F1824459EB40032C535 /* LaunchScreen.storyboard */,
 				B4FD4F1B24459EB40032C535 /* Info.plist */,
-				B45955F7246CF8D400A55F08 /* extension.swift */,
 				B4FD4F1524459EB40032C535 /* Preview Content */,
 			);
 			path = MachineManagment;
@@ -534,6 +539,7 @@
 			name = MachineManagment;
 			packageProductDependencies = (
 				B477821D2489F86200F96890 /* SwiftUICharts */,
+				B4583F2224E26D57000FFDF1 /* LocationProvider */,
 			);
 			productName = MachineManagment;
 			productReference = B4FD4F0A24459EAE0032C535 /* MachineManagment.app */;
@@ -613,6 +619,7 @@
 			mainGroup = B4FD4F0124459EAE0032C535;
 			packageReferences = (
 				B477821C2489F86200F96890 /* XCRemoteSwiftPackageReference "ChartView" */,
+				B4583F2124E26D57000FFDF1 /* XCRemoteSwiftPackageReference "LocationProvider" */,
 			);
 			productRefGroup = B4FD4F0B24459EAE0032C535 /* Products */;
 			projectDirPath = "";
@@ -793,6 +800,7 @@
 				B4781C44246B984A008CCA40 /* SelectView.swift in Sources */,
 				B444D28F24498A7C00AEBE3E /* ScannerView.swift in Sources */,
 				B4778234248E0AB200F96890 /* SwiperView.swift in Sources */,
+				B401AAE724DBD1DE00179337 /* MotionManager.swift in Sources */,
 				B4328A7E244EBF8500A35F8A /* KeyboardInputView.swift in Sources */,
 				B444D292244D631200AEBE3E /* DetailView.swift in Sources */,
 				B439C4522463CBC6005BEA0E /* ARView.swift in Sources */,
@@ -1168,6 +1176,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		B4583F2124E26D57000FFDF1 /* XCRemoteSwiftPackageReference "LocationProvider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/himbeles/LocationProvider";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		B477821C2489F86200F96890 /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppPear/ChartView";
@@ -1179,6 +1195,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B4583F2224E26D57000FFDF1 /* LocationProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B4583F2124E26D57000FFDF1 /* XCRemoteSwiftPackageReference "LocationProvider" */;
+			productName = LocationProvider;
+		};
 		B477821D2489F86200F96890 /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B477821C2489F86200F96890 /* XCRemoteSwiftPackageReference "ChartView" */;

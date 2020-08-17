@@ -89,7 +89,7 @@ struct ARPresentView: View{
                             .stroke(Color.green, lineWidth: 2))
                     .background(Color.white)
                 .cornerRadius(10)
-                NavigationLink(destination: MapDirectionView( fromDetail: false), isActive: $turnToMapView) {
+                NavigationLink(destination: MapDirectionView(fromDetail: false, showAlert: true, machine: nil), isActive: $turnToMapView) {
                     EmptyView()
                 }
             }

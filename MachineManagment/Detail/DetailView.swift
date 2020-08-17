@@ -128,7 +128,7 @@ struct DetailView: View {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.green, lineWidth: 2))
             
-            NavigationLink(destination: MapDirectionView(fromDetail: true), isActive: $turnToMapView) {
+            NavigationLink(destination: MapDirectionView(fromDetail: true, showAlert:true, machine: machine).environmentObject(MotionManager()), isActive: $turnToMapView) {
                 EmptyView()
             }
             Spacer()

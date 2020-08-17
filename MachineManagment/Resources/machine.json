@@ -12,6 +12,8 @@
         "userName": "山田　太郎",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "10",
+        "worldMapy": "20",
         "date": "20200605"
       },
       {
@@ -26,6 +28,8 @@
         "userName": "田中　花子",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "30",
+        "worldMapy": "20",
         "date": "20200605"
       },
       {
@@ -40,6 +44,8 @@
         "userName": "佐藤　茂",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "100",
+        "worldMapy": "200",
         "date": "20200605"
       },
       {
@@ -54,6 +60,8 @@
         "userName": "鈴木　加奈子",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "80",
+        "worldMapy": "50",
         "date": "20200605"
       },
       {
@@ -68,6 +76,8 @@
         "userName": "高橋　一",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "100",
+        "worldMapy": "20",
         "date": "20200608"
       },
       {
@@ -82,6 +92,8 @@
         "userName": "ルオ　ラン6",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "70",
+        "worldMapy": "120",
         "date": "20200608"
       },
       {
@@ -96,6 +108,8 @@
         "userName": "ルオ　ラン7",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "100",
+        "worldMapy": "250",
         "date": "20200608"
       },
       {
@@ -110,6 +124,8 @@
         "userName": "ルオ　ラン8",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "10",
+        "worldMapy": "100",
         "date": "20200608"
       },
       {
@@ -124,6 +140,8 @@
         "userName": "ルオ　ラン9",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "50",
+        "worldMapy": "50",
         "date": "20200609"
       },
       {
@@ -138,6 +156,8 @@
         "userName": "ルオ　ラン10",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "100",
+        "worldMapy": "50",
         "date": "20200609"
       },
       {
@@ -152,6 +172,8 @@
         "userName": "CSS部1",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "80",
+        "worldMapy": "80",
         "date": "20200605"
       },
       {
@@ -166,6 +188,8 @@
         "userName": "CSS部2",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "120",
+        "worldMapy": "120",
         "date": "20200605"
       },
       {
@@ -180,6 +204,8 @@
         "userName": "CSS部3",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "200",
+        "worldMapy": "200",
         "date": "20200605"
       },
       {
@@ -194,6 +220,8 @@
         "userName": "CSS部4",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "140",
+        "worldMapy": "210",
         "date": "20200605"
       },
       {
@@ -208,6 +236,8 @@
         "userName": "CSS部5",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "110",
+        "worldMapy": "90",
         "date": "20200605"
       },
       {
@@ -222,6 +252,8 @@
         "userName": "大阪事業部1",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "100",
+        "worldMapy": "100",
         "date": "20200605"
       },
       {
@@ -236,6 +268,8 @@
         "userName": "大阪事業部2",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "110",
+        "worldMapy": "130",
         "date": "20200605"
       },
       {
@@ -250,6 +284,8 @@
         "userName": "大阪事業部3",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "140",
+        "worldMapy": "80",
         "date": "20200605"
       },
       {
@@ -264,6 +300,8 @@
         "userName": "大阪事業部4",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "100",
+        "worldMapy": "260",
         "date": "20200605"
       },
       {
@@ -278,6 +316,8 @@
         "userName": "大阪事業部5",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "30",
+        "worldMapy": "110",
         "date": "20200605"
       },
       {
@@ -292,6 +332,8 @@
         "userName": "大阪事業部6",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "70",
+        "worldMapy": "50",
         "date": "20200605"
       },
       {
@@ -306,6 +348,8 @@
         "userName": "大阪事業部7",
         "complete": "0",
         "worldMap": "",
+        "worldMapx": "120",
+        "worldMapy": "210",
         "date": "20200605"
       }
       
