@@ -35,8 +35,9 @@ struct NavigationARView: UIViewControllerRepresentable {
     class Coordinator: NSObject, MapDirectionDelegate {
         
         func setDistance(x: Float, y: Float) {
-            self.parent.distanceX = x
-            self.parent.distanceY = y
+            self.parent.distanceX = x * 100
+            self.parent.distanceY = y * 100
+            //print(x,y)
         }
         
         

@@ -72,22 +72,20 @@ struct ARPresentView: View{
                         .cornerRadius(10)
                     }.disabled(!$buttonAvaliable.wrappedValue)
                 }
-                Button(action: {
-                    if self.fromMenu {
-                        self.turnToMapView = true
-                    } else {
+                if !self.fromMenu {
+                    Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Text("画面切り替え")
                     }
-                }) {
-                    Text("画面切り替え")
+                    .foregroundColor(Color.green)
+                    .frame(width: 300, height: 40.0)
+                    .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.green, lineWidth: 2))
+                        .background(Color.white)
+                    .cornerRadius(10)
                 }
-                .foregroundColor(Color.green)
-                .frame(width: 300, height: 40.0)
-                .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.green, lineWidth: 2))
-                    .background(Color.white)
-                .cornerRadius(10)
                 NavigationLink(destination: MapDirectionView(fromDetail: false, showAlert: true, machine: nil), isActive: $turnToMapView) {
                     EmptyView()
                 }

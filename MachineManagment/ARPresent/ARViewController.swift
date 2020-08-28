@@ -112,11 +112,12 @@ class ARViewController: UIViewController, ObservableObject {
             do {
                 for (key, device) in self.tempAnchorList {
                     DBManager.sharedInstance.saveDeviceAnchor(id: key, worldMap: self.worldString, anchor: device.transform)
+                    DBManager.sharedInstance.saveMachineMapCoordinates(id: key, position: device.transform)
                 }
                 try self.archive(worldMap: worldMap)
                 DispatchQueue.main.async {
                     self.arViewPresentDelegate?.setMessage(text: "World map is saved.")
-                    DBManager.sharedInstance.saveWorldMapModel( path: self.worldString)
+                    DBManager.sharedInstance.saveWorldMapModel(path: self.worldString)
                     self.showAlertMessage(message: "デバイス位置を保存しました。")
                     self.tapGestureRecognizer.isEnabled = true
                     self.arViewPresentDelegate?.setButtonAvaliable(avaliable: true)
@@ -428,8 +429,9 @@ extension ARViewController: ARSCNViewDelegate {
                     let dx = end.x - start.x
                     let dy = end.y - start.y
                     let dz = end.z - start.z
-                    print(String(sqrt(pow(dx,2)+pow(dy,2)+pow(dz,2))))
-                    self.mapDirectionDelegate?.setDistance(x: dx, y: dy)
+                    //need to fix
+                    //print(String(sqrt(pow(dx,2)+pow(dy,2)+pow(dz,2))))
+                    self.mapDirectionDelegate?.setDistance(x: -dx, y: -dz)
                 }
             } else {
                 for node in self.nodeList {

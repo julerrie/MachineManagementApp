@@ -98,10 +98,10 @@ struct MapDirectionView: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 Button(action: {
-                    self.imageSize.width *= 0.9
-                    self.imageSize.height *= 0.9
-                    self.circleSize.width *= 0.9
-                    self.circleSize.height *= 0.9
+                    self.imageSize.width *= 1.1
+                    self.imageSize.height *= 1.1
+                    self.circleSize.width *= 1.1
+                    self.circleSize.height *= 1.1
                 }) {
                     Text("-")
                         .font(.title)
@@ -151,7 +151,7 @@ struct MapDirectionView: View {
             .cornerRadius(10)
             .alert(isPresented: $placeAlert) { () -> Alert in
                 Alert(title: Text(""), message: Text("現在地を設定しました。"), dismissButton:.default(Text("確認"), action: {
-                    self.motionManager.getMotionInformation()
+                   // self.motionManager.getMotionInformation()
                 }))
             }
             NavigationLink(destination: ARPresentViewBuilder.make(fromMenu: false), isActive: $turnToARView) {
@@ -160,9 +160,9 @@ struct MapDirectionView: View {
             .padding(.bottom, 50.0)
         }
         .navigationBarTitle("フロアガイド", displayMode: .inline)
-        .onDisappear {
-            self.motionManager.stopMotionDetection()
-        }
+//        .onDisappear {
+//            self.motionManager.stopMotionDetection()
+//        }
     }
 }
 

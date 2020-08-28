@@ -104,6 +104,22 @@ class DBManager {
         }
     }
     
+    public func saveMachineMapCoordinates(id: String, position: simd_float4x4) {
+        let existingModel = realm.object(ofType: MachineModel.self, forPrimaryKey: id)
+        if existingModel != nil {
+            try! realm.write {
+                let positionX = position.columns.3.x
+                let positionY = position.columns.3.y
+                existingModel?.worldMapy = positionY >= 0 ? String(200 - (positionY * 10)) : String(-positionY*10)
+                existingModel?.worldMapx = positionX >= 0 ? String(400 - (positionX * 10)) : String(-positionX*10)
+                //print(existingModel?.worldMapx,existingModel?.worldMapy)
+                print("update finish")
+            }
+        }else {
+            print("data not exist")
+        }
+    }
+    
     public func getDeviceAnchor() -> [AnchorModel] {
         return Array(realm.objects(AnchorModel.self))
     }

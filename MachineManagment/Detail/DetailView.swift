@@ -117,17 +117,18 @@ struct DetailView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.green, lineWidth: 2))
             }
-            Button(action: {
-                self.turnToMapView = true
-            }) {
-                Text("位置を確認する")
+            if !(machine?.worldMapx ?? "").isEmpty && !(machine?.worldMapy ?? "").isEmpty {
+                Button(action: {
+                    self.turnToMapView = true
+                }) {
+                    Text("位置を確認する")
+                }
+                    .foregroundColor(Color.green)
+                    .frame(width: 250, height: 40.0)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.green, lineWidth: 2))
             }
-                .foregroundColor(Color.green)
-                .frame(width: 250, height: 40.0)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.green, lineWidth: 2))
-            
             NavigationLink(destination: MapDirectionView(fromDetail: true, showAlert:true, machine: machine).environmentObject(MotionManager()), isActive: $turnToMapView) {
                 EmptyView()
             }
