@@ -11,6 +11,7 @@ target 'MachineManagment' do
     inherit! :search_paths
     # Pods for testing
 	pod 'SnapshotTesting', '~> 1.8.1'
+	pod 'SwiftLint'
   end
 
   target 'MachineManagmentUITests' do

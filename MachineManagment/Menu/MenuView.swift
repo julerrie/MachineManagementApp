@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 struct MenuView: View {
     @EnvironmentObject var userSettings: UserSettings
     var body: some View {

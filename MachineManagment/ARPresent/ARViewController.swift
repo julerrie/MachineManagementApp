@@ -19,10 +19,15 @@ protocol ARViewPresentDelegate {
     func setButtonAvaliable(avaliable: Bool)
 }
 
+protocol MapDirectionDelegate {
+    func setDistance(x: Float, y: Float)
+}
+
 class ARViewController: UIViewController, ObservableObject {
     
     var sceneView: ARSCNView = ARSCNView()
     var arViewPresentDelegate: ARViewPresentDelegate?
+    var mapDirectionDelegate: MapDirectionDelegate?
     let selectView: SelectView = SelectView(frame: CGRect(x: 0, y: 0, width: 300, height: 400))
     let settingView: SettingView = SettingView(frame: CGRect(x: 0, y: 0, width: 300, height: 200))
     var deviceID: String = ""
@@ -38,40 +43,56 @@ class ARViewController: UIViewController, ObservableObject {
     var tempAnchorList: [String:ARAnchor] = [:]
     var tapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     
+    
+    //Properties for MapDirectionView
+    var oneMachine: MachineModel?
+    
+//    @Published var distance: String? {
+//        willSet {
+//            objectWillChange.send()
+//        }
+//    }
+    
     public func initProcess() {
         super.viewDidLoad()
         sceneView = ARSCNView(frame: UIScreen.main.bounds)
         self.sceneView.delegate = self
         view.addSubview(sceneView)
-        selectView.center = self.view.center
-        selectView.center.y -= 100
-        selectView.layer.cornerRadius = 10
-        selectView.deviceIdSelected = { result in
-            self.updateNodePosition(result: result)
+        if self.arViewPresentDelegate != nil {
+            selectView.center = self.view.center
+            selectView.center.y -= 100
+            selectView.layer.cornerRadius = 10
+            selectView.deviceIdSelected = { result in
+                self.updateNodePosition(result: result)
+            }
+            selectView.worldMapSelected = { worldMap in
+                self.worldString = worldMap
+                self.loadingProcess()
+                self.tapGestureRecognizer.isEnabled = true
+            }
+            selectView.closeView = {
+                self.arViewPresentDelegate?.setButtonAvaliable(avaliable: true)
+                self.tapGestureRecognizer.isEnabled = true
+            }
+            settingView.center = self.view.center
+            settingView.center.y -= 100
+            settingView.layer.cornerRadius = 10
+            settingView.setWorldMapNamp = { result in
+                self.worldString = result
+                self.saveProcess()
+            }
+            settingView.closeView = {
+                self.tapGestureRecognizer.isEnabled = true
+                self.arViewPresentDelegate?.setButtonAvaliable(avaliable: true)
+            }
+            self.addTapGestureToSceneView()
+            self.loadBarButtonItemDidTouch()
+        } else {
+            self.selectView.removeFromSuperview()
+            self.settingView.removeFromSuperview()
+            self.loadDeviceFrom2DMap()
         }
-        selectView.worldMapSelected = { worldMap in
-            self.worldString = worldMap
-            self.loadingProcess()
-            self.tapGestureRecognizer.isEnabled = true
-        }
-        selectView.closeView = {
-            self.arViewPresentDelegate?.setButtonAvaliable(avaliable: true)
-            self.tapGestureRecognizer.isEnabled = true
-        }
-        settingView.center = self.view.center
-        settingView.center.y -= 100
-        settingView.layer.cornerRadius = 10
-        settingView.setWorldMapNamp = { result in
-            self.worldString = result
-            self.saveProcess()
-        }
-        settingView.closeView = {
-            self.tapGestureRecognizer.isEnabled = true
-            self.arViewPresentDelegate?.setButtonAvaliable(avaliable: true)
-        }
-        self.addTapGestureToSceneView()
         self.configureLighting()
-        self.loadBarButtonItemDidTouch()
     }
     
     public func cleanProcess() {
@@ -208,13 +229,7 @@ class ARViewController: UIViewController, ObservableObject {
         self.tempAnchorList = [:]
         for anchorModel in anchorList {
             if anchorModel.worldMap == self.worldString {
-                var anchorMatrix: simd_float4x4 = simd_float4x4()
-                if anchorModel.anchorList.count == 16{
-                    anchorMatrix.columns.0 = simd_float4(arrayLiteral: anchorModel.anchorList[0],anchorModel.anchorList[1],anchorModel.anchorList[2],anchorModel.anchorList[3] )
-                    anchorMatrix.columns.1 = simd_float4(arrayLiteral: anchorModel.anchorList[4],anchorModel.anchorList[5],anchorModel.anchorList[6],anchorModel.anchorList[7] )
-                    anchorMatrix.columns.2 = simd_float4(arrayLiteral: anchorModel.anchorList[8],anchorModel.anchorList[9],anchorModel.anchorList[10],anchorModel.anchorList[11] )
-                    anchorMatrix.columns.3 = simd_float4(arrayLiteral: anchorModel.anchorList[12],anchorModel.anchorList[13],anchorModel.anchorList[14],anchorModel.anchorList[15] )
-                }
+                let anchorMatrix: simd_float4x4 = self.anchorInfoTransfer(anchorInfo: anchorModel)
                 let anchor = ARAnchor(name: anchorModel.managementId, transform: anchorMatrix)
                 print(anchorModel.managementId)
                 print(anchor.transform.columns.3.x,anchor.transform.columns.3.y, anchor.transform.columns.3.z)
@@ -288,6 +303,83 @@ class ARViewController: UIViewController, ObservableObject {
         }
     }
     
+    //初期化
+    func resetTrackingConfigurationViaMapDirectionView(with worldMap: ARWorldMap? = nil) {
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = [.horizontal]
+        
+        let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
+        self.tempAnchorList = [:]
+        self.nodeList = [:]
+        if let worldMap = worldMap {
+            configuration.initialWorldMap = worldMap
+            
+            self.arViewPresentDelegate?.setMessage(text: "Found saved world map.")
+        } else {
+            self.arViewPresentDelegate?.setMessage(text: "Move camera around to map your surrounding space.")
+        }
+        
+        sceneView.debugOptions = [.showFeaturePoints]
+        sceneView.session.run(configuration, options: options)
+        if !self.nodeButton.isEmpty{
+            for button in self.nodeButton {
+                DispatchQueue.main.async {
+                    button.value.removeFromSuperview()
+                }
+            }
+            self.nodeButton = [:]
+        }
+    }
+    
+    func anchorInfoTransfer(anchorInfo: AnchorModel) -> simd_float4x4 {
+        var anchorMatrix: simd_float4x4 = simd_float4x4()
+        if anchorInfo.anchorList.count == 16{
+            anchorMatrix.columns.0 = simd_float4(arrayLiteral: anchorInfo.anchorList[0],anchorInfo.anchorList[1],anchorInfo.anchorList[2],anchorInfo.anchorList[3] )
+            anchorMatrix.columns.1 = simd_float4(arrayLiteral: anchorInfo.anchorList[4],anchorInfo.anchorList[5],anchorInfo.anchorList[6],anchorInfo.anchorList[7] )
+            anchorMatrix.columns.2 = simd_float4(arrayLiteral: anchorInfo.anchorList[8],anchorInfo.anchorList[9],anchorInfo.anchorList[10],anchorInfo.anchorList[11] )
+            anchorMatrix.columns.3 = simd_float4(arrayLiteral: anchorInfo.anchorList[12],anchorInfo.anchorList[13],anchorInfo.anchorList[14],anchorInfo.anchorList[15] )
+        }
+        return anchorMatrix
+    }
+    
+    
+    //node位置計算
+//    func doAnchorCalculation() {
+//
+//    }
+//
+}
+
+extension ARViewController {
+    
+    //初期化（２Dマップ）
+    func loadDeviceFrom2DMap() {
+        if let oneMachine: MachineModel = self.oneMachine {
+            let anchorInfo: AnchorModel = DBManager.sharedInstance.getAnchorModelBy(deviceId: oneMachine.managementId)
+            do {
+                let worldURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    .appendingPathComponent("worldMapURL_" + anchorInfo.worldMap)
+                if let worldMapData = retrieveWorldMapData(from: worldURL),
+                    let worldMap = unarchive(worldMapData: worldMapData) {
+                    resetTrackingConfigurationViaMapDirectionView(with: worldMap)
+                } else {
+                    resetTrackingConfigurationViaMapDirectionView()
+                }
+            } catch {
+                print("Error retrieving world map data.")
+                return
+            }
+            
+            let anchorMatrix: simd_float4x4 = self.anchorInfoTransfer(anchorInfo: anchorInfo)
+            let anchor = ARAnchor(name: anchorInfo.managementId, transform: anchorMatrix)
+            print(anchorInfo.managementId)
+            print(anchor.transform.columns.3.x,anchor.transform.columns.3.y, anchor.transform.columns.3.z)
+            self.tempAnchorList[anchorInfo.managementId] = anchor
+            let rectangleNode = self.generateRectangleNode(displayMachine: oneMachine)
+            self.nodeList[anchorInfo.managementId] = rectangleNode
+            sceneView.session.add(anchor: anchor)
+        }
+    }
 }
 
 extension ARViewController: ARSCNViewDelegate {
@@ -329,96 +421,105 @@ extension ARViewController: ARSCNViewDelegate {
             guard let pointOfView = renderer.pointOfView else {
                 return
             }
-            for node in self.nodeList {
-                let isVisible = renderer.isNode(node.value, insideFrustumOf: pointOfView)
-                let xDistance = node.value.convertPosition(node.value.position, to: pointOfView).x
-                let yDistance = node.value.convertPosition(node.value.position, to: pointOfView).y
-//                let zDistance = node.value.convertPosition(node.value.position, to: pointOfView).z
-//                print(node.key)
-//                print(xDistance, yDistance, zDistance)
-                if !isVisible {
-                    let xRange: Float = 0.2
-                    let yRange: Float = 0.2
-                    var xVal: CGFloat = 0.5 * screenWidth - 150
-                    var yVal: CGFloat = 0.5 * screenHeight - 80
-                    var direction: String = ""
-                    
-                    if abs(xDistance) >= xRange{
-                        if xDistance >= 0 {
-                            xVal = screenWidth - 150
-                            direction = "arrow.right"
-                        } else {
-                            xVal = 0
-                            direction = "arrow.left"
-                        }
-                        if yDistance <= 0 {
-                            yVal += 0.5 * screenHeight * CGFloat(abs(yDistance) / yRange)
-                            if yVal > screenHeight - 80 {
-                                yVal = screenHeight - 80
-                            }
-                        } else {
-                            yVal -= 0.5 * screenHeight * CGFloat(abs(yDistance) / yRange)
-                            if yVal < 0 {
-                                yVal = 0
-                            }
-                        }
-                    } else {
-                        if xDistance >= 0 {
-                            xVal += 0.5 * screenWidth * CGFloat(abs(xDistance) / xRange)
-                            if xVal > screenWidth - 150 {
+            if self.arViewPresentDelegate == nil {
+                for node in self.nodeList {
+                    let end = node.value.presentation.worldPosition
+                    let start = pointOfView.worldPosition
+                    let dx = end.x - start.x
+                    let dy = end.y - start.y
+                    let dz = end.z - start.z
+                    print(String(sqrt(pow(dx,2)+pow(dy,2)+pow(dz,2))))
+                    self.mapDirectionDelegate?.setDistance(x: dx, y: dy)
+                }
+            } else {
+                for node in self.nodeList {
+                    let isVisible = renderer.isNode(node.value, insideFrustumOf: pointOfView)
+                    let xDistance = node.value.convertPosition(node.value.position, to: pointOfView).x
+                    let yDistance = node.value.convertPosition(node.value.position, to: pointOfView).y
+                    if !isVisible {
+                        let xRange: Float = 0.2
+                        let yRange: Float = 0.2
+                        var xVal: CGFloat = 0.5 * screenWidth - 150
+                        var yVal: CGFloat = 0.5 * screenHeight - 80
+                        var direction: String = ""
+                        
+                        if abs(xDistance) >= xRange{
+                            if xDistance >= 0 {
                                 xVal = screenWidth - 150
-                            }
-                        } else if xDistance < 0 {
-                            xVal -= 0.5 * screenWidth * CGFloat(abs(xDistance) / xRange)
-                            if xVal < 0 {
+                                direction = "arrow.right"
+                            } else {
                                 xVal = 0
+                                direction = "arrow.left"
+                            }
+                            if yDistance <= 0 {
+                                yVal += 0.5 * screenHeight * CGFloat(abs(yDistance) / yRange)
+                                if yVal > screenHeight - 80 {
+                                    yVal = screenHeight - 80
+                                }
+                            } else {
+                                yVal -= 0.5 * screenHeight * CGFloat(abs(yDistance) / yRange)
+                                if yVal < 0 {
+                                    yVal = 0
+                                }
+                            }
+                        } else {
+                            if xDistance >= 0 {
+                                xVal += 0.5 * screenWidth * CGFloat(abs(xDistance) / xRange)
+                                if xVal > screenWidth - 150 {
+                                    xVal = screenWidth - 150
+                                }
+                            } else if xDistance < 0 {
+                                xVal -= 0.5 * screenWidth * CGFloat(abs(xDistance) / xRange)
+                                if xVal < 0 {
+                                    xVal = 0
+                                }
+                            }
+                            if yDistance <= 0 {
+                                yVal = screenHeight - 80
+                                direction = "arrow.down"
+                            } else {
+                                yVal = 0
+                                direction = "arrow.up"
                             }
                         }
-                        if yDistance <= 0 {
-                            yVal = screenHeight - 80
-                            direction = "arrow.down"
+                        if xVal == 0 && yVal == 0 {
+                            direction = "arrow.up.left"
+                        } else if xVal == screenWidth - 150 && yVal == 0 {
+                            direction = "arrow.up.right"
+                        } else if xVal == 0 && yVal == screenHeight - 80 {
+                            direction = "arrow.down.left"
+                        } else if xVal == screenWidth - 150 && yVal == screenHeight - 80 {
+                            direction = "arrow.down.right"
+                        }
+                        
+                        //print(xVal, yVal)
+                        if self.nodeButton.keys.contains(node.key) {
+                            DispatchQueue.main.async {
+                                self.nodeButton[node.key]?.updateImage(name: direction)
+                                self.nodeButton[node.key]?.frame = CGRect(x: xVal, y: yVal, width: 150, height: 80)
+                            }
                         } else {
-                            yVal = 0
-                            direction = "arrow.up"
+                            let directionView = DirectionView()
+                            directionView.deviceId = node.key
+                            directionView.userName = self.machineList[node.key]?.userName ?? ""
+                            directionView.commonInit()
+                            directionView.layer.borderWidth = 3.0
+                            directionView.layer.borderColor = ColorGenerator.sharedInstance.next().cgColor
+                            directionView.layer.cornerRadius = 8.0
+                            directionView.updateImage(name: direction)
+                            directionView.frame = CGRect(x: xVal, y: yVal, width: 150, height: 80)
+                            self.nodeButton[node.key] = directionView
+                            DispatchQueue.main.async {
+                                self.view.addSubview(directionView)
+                            }
                         }
-                    }
-                    if xVal == 0 && yVal == 0 {
-                        direction = "arrow.up.left"
-                    } else if xVal == screenWidth - 150 && yVal == 0 {
-                        direction = "arrow.up.right"
-                    } else if xVal == 0 && yVal == screenHeight - 80 {
-                        direction = "arrow.down.left"
-                    } else if xVal == screenWidth - 150 && yVal == screenHeight - 80 {
-                        direction = "arrow.down.right"
-                    }
-                    
-                    //print(xVal, yVal)
-                    if self.nodeButton.keys.contains(node.key) {
-                        DispatchQueue.main.async {
-                            self.nodeButton[node.key]?.updateImage(name: direction)
-                            self.nodeButton[node.key]?.frame = CGRect(x: xVal, y: yVal, width: 150, height: 80)
-                        }
+                        
                     } else {
-                        let directionView = DirectionView()
-                        directionView.deviceId = node.key
-                        directionView.userName = self.machineList[node.key]?.userName ?? ""
-                        directionView.commonInit()
-                        directionView.layer.borderWidth = 3.0
-                        directionView.layer.borderColor = ColorGenerator.sharedInstance.next().cgColor
-                        directionView.layer.cornerRadius = 8.0
-                        directionView.updateImage(name: direction)
-                        directionView.frame = CGRect(x: xVal, y: yVal, width: 150, height: 80)
-                        self.nodeButton[node.key] = directionView
-                        DispatchQueue.main.async {
-                            self.view.addSubview(directionView)
-                        }
-                    }
-                    
-                } else {
-                    if self.nodeButton.keys.contains(node.key) {
-                        DispatchQueue.main.async {
-                            self.nodeButton[node.key]?.removeFromSuperview()
-                            self.nodeButton.removeValue(forKey: node.key)
+                        if self.nodeButton.keys.contains(node.key) {
+                            DispatchQueue.main.async {
+                                self.nodeButton[node.key]?.removeFromSuperview()
+                                self.nodeButton.removeValue(forKey: node.key)
+                            }
                         }
                     }
                 }

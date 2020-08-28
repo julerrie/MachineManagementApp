@@ -66,6 +66,8 @@
 		B4A33E9224D28DE800FE7825 /* MapDirectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A33E9124D28DE800FE7825 /* MapDirectionView.swift */; };
 		B4A33E9524D2965500FE7825 /* MapImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A33E9424D2965500FE7825 /* MapImageView.swift */; };
 		B4A33E9724D2966400FE7825 /* MapImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4A33E9624D2966400FE7825 /* MapImageView.xib */; };
+		B4C2DA6C24F73C3E00969219 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2DA6B24F73C3E00969219 /* LocationManager.swift */; };
+		B4C2DA6E24F774D500969219 /* NavigationARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C2DA6D24F774D500969219 /* NavigationARView.swift */; };
 		B4FD4F0E24459EAE0032C535 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD4F0D24459EAE0032C535 /* AppDelegate.swift */; };
 		B4FD4F1024459EAE0032C535 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD4F0F24459EAE0032C535 /* SceneDelegate.swift */; };
 		B4FD4F1224459EAE0032C535 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FD4F1124459EAE0032C535 /* LoginView.swift */; };
@@ -171,6 +173,8 @@
 		B4A33E9124D28DE800FE7825 /* MapDirectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDirectionView.swift; sourceTree = "<group>"; };
 		B4A33E9424D2965500FE7825 /* MapImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapImageView.swift; sourceTree = "<group>"; };
 		B4A33E9624D2966400FE7825 /* MapImageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapImageView.xib; sourceTree = "<group>"; };
+		B4C2DA6B24F73C3E00969219 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		B4C2DA6D24F774D500969219 /* NavigationARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationARView.swift; sourceTree = "<group>"; };
 		B4FD4F0A24459EAE0032C535 /* MachineManagment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MachineManagment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4FD4F0D24459EAE0032C535 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4FD4F0F24459EAE0032C535 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -410,8 +414,10 @@
 			isa = PBXGroup;
 			children = (
 				B4A33E9324D2962E00FE7825 /* MapImageView */,
+				B4C2DA6D24F774D500969219 /* NavigationARView.swift */,
 				B4A33E9124D28DE800FE7825 /* MapDirectionView.swift */,
 				B401AAE624DBD1DE00179337 /* MotionManager.swift */,
+				B4C2DA6B24F73C3E00969219 /* LocationManager.swift */,
 			);
 			path = MapDirection;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 				B4FD4F0824459EAE0032C535 /* Resources */,
 				B439C4472457ECD9005BEA0E /* Embed Frameworks */,
 				B439C4482457ED64005BEA0E /* ShellScript */,
+				B438106924EB96B700A34D65 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -721,6 +728,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MachineManagment-MachineManagmentUITests/Pods-MachineManagment-MachineManagmentUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B438106924EB96B700A34D65 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
 		B439C4482457ED64005BEA0E /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -808,6 +833,7 @@
 				B444D28E24498A7C00AEBE3E /* AVFoundationVM.swift in Sources */,
 				B436CD0624972E6F002CEDD7 /* NFCReader.swift in Sources */,
 				B4FD4F0E24459EAE0032C535 /* AppDelegate.swift in Sources */,
+				B4C2DA6E24F774D500969219 /* NavigationARView.swift in Sources */,
 				B4328A912452954F00A35F8A /* MachineModel.swift in Sources */,
 				B440AF5E244824A700A16997 /* BarcodeScanView.swift in Sources */,
 				B49B5D0124779528008DFAB4 /* OCRView.swift in Sources */,
@@ -819,6 +845,7 @@
 				B49B5D0D2477B7DE008DFAB4 /* OCRSCannerViewController.swift in Sources */,
 				B439C4542463D92A005BEA0E /* ARViewController.swift in Sources */,
 				B49B5D0F2477B82E008DFAB4 /* StringUtils.swift in Sources */,
+				B4C2DA6C24F73C3E00969219 /* LocationManager.swift in Sources */,
 				B4778230248E0A5700F96890 /* PageView.swift in Sources */,
 				B4A33E9224D28DE800FE7825 /* MapDirectionView.swift in Sources */,
 				B47782262489FCB900F96890 /* ChartView.swift in Sources */,

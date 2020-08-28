@@ -9,16 +9,19 @@
 import Foundation
 import CoreMotion
 import SwiftUI
+import CoreLocation
 
 class MotionManager: ObservableObject {
     
     var motionManager: CMMotionManager!
     var initialAttitude : CMAttitude!
+    var locationManager: CLLocationManager!
     @Published var xChange: Float = 0
     @Published var yChange: Float = 0
     
     public init() {
         motionManager = CMMotionManager()
+        locationManager = CLLocationManager()
     }
     
     public func getMotionInformation() {

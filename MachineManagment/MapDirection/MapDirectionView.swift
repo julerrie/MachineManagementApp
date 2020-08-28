@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import LocationProvider
 
 struct MapDirectionView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -16,13 +15,15 @@ struct MapDirectionView: View {
     @State var fromDetail: Bool = true
     @State private var offset = CGSize.zero
     @State var position = CGPoint.zero
-    @State var showAlert: Bool = false
+    @State var showAlert: Bool = true
     @State var placeDecided: Bool = false
     @State var imageSize: CGSize = CGSize(width: 300, height: 500)
     @State var circleSize: CGSize = CGSize(width: 20, height: 20)
     @State var placeAlert: Bool = false
-//  @ObservedObject var locationProvider : LocationProvider
     @EnvironmentObject var motionManager: MotionManager
+    @ObservedObject private var arViewController = ARViewController()
+    @State var distanceX: Float = 0
+    @State var distanceY: Float = 0
     var removal: (() -> Void)? = nil
     var machine: MachineModel?
     var destinationPoint: CGPoint?
@@ -31,25 +32,23 @@ struct MapDirectionView: View {
         if let machine: MachineModel = machine {
             self.machine = machine
             self.destinationPoint = CGPoint(x: Int(machine.worldMapx) ?? 0, y: Int(machine.worldMapy) ?? 0)
+            arViewController.oneMachine = machine
         }
         self.fromDetail = fromDetail
         self.showAlert = showAlert
     }
     
-//    init(fromDetail: Bool, showAlert: Bool) {
-//        locationProvider = LocationProvider()
-//        self.fromDetail = fromDetail
-//        self.showAlert = showAlert
-//        do {try locationProvider.start()}
-//        catch {
-//            print("No location access.")
-//            locationProvider.requestAuthorization()
-//        }
-//    }
-//    
     var body: some View {
         VStack(spacing: 30.0) {
             ZStack {
+                NavigationARView(distanceX: $distanceX, distanceY: $distanceY, view: arViewController)
+                .opacity(0)
+                    .onAppear {
+                            self.arViewController.initProcess()
+                }
+                    .onDisappear {
+                        self.arViewController.cleanProcess()
+                }
                 Image("FloorMap")
                     .resizable()
                     .scaledToFill()
@@ -68,7 +67,7 @@ struct MapDirectionView: View {
                     )
                 Circle()
                     .frame(width: circleSize.width, height: circleSize.height)
-                    .offset(x: offset.width + CGFloat(motionManager.xChange), y: offset.height + CGFloat(motionManager.yChange))
+                    .offset(x: offset.width + CGFloat($distanceX.wrappedValue), y: offset.height + CGFloat($distanceY.wrappedValue))
                     .position($position.wrappedValue)
                 if self.destinationPoint != nil {
                     Circle()
@@ -80,6 +79,7 @@ struct MapDirectionView: View {
                 
             }
             .frame(width: 300, height: 500, alignment: .center)
+            
             HStack(spacing: 40.0) {
                 Button(action: {
                     self.imageSize.width *= 1.1
@@ -132,7 +132,8 @@ struct MapDirectionView: View {
             .background(Color.white)
             .cornerRadius(10)
             .alert(isPresented: $showAlert) { () -> Alert in
-                Alert(title: Text(""), message: Text("現在地を設定してください"), dismissButton:.default(Text("確認")))
+                Alert(title: Text(""), message: Text("現在地を設定してください"), dismissButton:.default(Text("確認"), action: {
+                }))
             }
             
             Button(action: {
@@ -159,6 +160,9 @@ struct MapDirectionView: View {
             .padding(.bottom, 50.0)
         }
         .navigationBarTitle("フロアガイド", displayMode: .inline)
+        .onDisappear {
+            self.motionManager.stopMotionDetection()
+        }
     }
 }
 

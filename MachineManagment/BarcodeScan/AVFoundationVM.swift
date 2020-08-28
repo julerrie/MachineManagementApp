@@ -20,7 +20,6 @@ protocol AVMessageDelegate {
 class AVFoundationVM: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate, ObservableObject, AVCaptureMetadataOutputObjectsDelegate{
     ///プレビュー用レイヤー
     var previewLayer: AVCaptureVideoPreviewLayer!
-    
     var delegate: AVMessageDelegate?
     ///撮影開始フラグ
     private var _takePhoto:Bool = false

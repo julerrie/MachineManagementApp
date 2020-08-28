@@ -19,12 +19,11 @@ struct ARPresentView: View{
     @State var turnToMapView: Bool = false
     @Environment(\.presentationMode) var presentationMode
     @State var fromMenu: Bool = true
-    
     var body: some View {
         ZStack {
             ZStack {
                 ARView(message: $message, buttonAvaliable: $buttonAvaliable, view: arViewController)
-                    .onAppear {
+                .onAppear {
                         self.arViewController.initProcess()
                         self.buttonAvaliable = false
                 }

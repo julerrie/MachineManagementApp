@@ -119,4 +119,11 @@ class DBManager {
         }
         return nil
     }
+    public func getAnchorModelBy(deviceId: String) -> AnchorModel {
+        if let anchorModel: AnchorModel = realm.object(ofType: AnchorModel.self, forPrimaryKey: deviceId) {
+            return anchorModel
+        } else {
+            return AnchorModel()
+        }
+    }
 }
