@@ -20,7 +20,7 @@ struct MapDirectionView: View {
     @State var imageSize: CGSize = CGSize(width: 300, height: 500)
     @State var circleSize: CGSize = CGSize(width: 20, height: 20)
     @State var placeAlert: Bool = false
-    @EnvironmentObject var motionManager: MotionManager
+    //@EnvironmentObject var motionManager: MotionManager
     @ObservedObject private var arViewController = ARViewController()
     @State var distanceX: Float = 0
     @State var distanceY: Float = 0
@@ -98,10 +98,10 @@ struct MapDirectionView: View {
                 .background(Color.white)
                 .cornerRadius(10)
                 Button(action: {
-                    self.imageSize.width *= 1.1
-                    self.imageSize.height *= 1.1
-                    self.circleSize.width *= 1.1
-                    self.circleSize.height *= 1.1
+                    self.imageSize.width *= 0.9
+                    self.imageSize.height *= 0.9
+                    self.circleSize.width *= 0.9
+                    self.circleSize.height *= 0.9
                 }) {
                     Text("-")
                         .font(.title)
